@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+        position: sticky;
+        top: 0;
+      }
+
+      li {
+        float: left;
+      }
+
+      li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+
+      li a:hover:not(.active) {
+        background-color: #04aa6d;
+      }
+
+      .section {
+        margin-bottom: 20px;
+        padding: 20px;
+        min-height: 1000px; /* 👈 ensures the block is tall enough to scroll */
+      }
+
+      #CSE3CWA {
+        background-color: lightcoral;
+      }
+      #CSE5006 {
+        background-color: lightblue;
+      }
+      #CSE3ILA {
+        background-color: lightgreen;
+      }
+      #CSE5IBL {
+        background-color: lightyellow;
+      }
+    </style>
+  </head>
+  <body onload="checkCookie()">
+    <div id="Home">
+      <h1>Navigation, Sections, and Cookies</h1>
+      <nav>
+        <ul>
+          <li><a href="#CSE3CWA">CSE3CWA</a></li>
+          <li><a href="#CSE5006">CSE5006</a></li>
+          <li><a href="#CSE3ILA">CSE3ILA</a></li>
+          <li style="float: right"><a href="#CSE5IBL">CSE5IBL</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div id="CSE3CWA" class="section">
+      <h2>CSE3CWA</h2>
+      <p>
+        Creating websites that scale to serve hundreds of millions of users with
+        acceptable response times is challenging...
+      </p>
+    </div>
+    <div id="CSE5006" class="section">
+      <h2>CSE5006</h2>
+      <p>
+        Creating websites that scale to serve hundreds of millions of users with
+        acceptable response times is challenging...
+      </p>
+    </div>
+    <div id="CSE3ILA" class="section">
+      <h2>CSE3ILA</h2>
+      <p>
+        You are to undertake a 12 x 20hr per week or equivalent industry based
+        learning program...
+      </p>
+    </div>
+    <div id="CSE5IBL" class="section">
+      <h2>CSE5IBL</h2>
+      <p>
+        Students undertake a 12 x 20hr per week or equivalent industry based
+        learning program...
+      </p>
+    </div>
+    <script>
+      function setCookie(cname, cvalue, exdays) {
+        const d = new Date();
+        d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+        let expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+      }
+
+      function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(";");
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i].trim();
+          if (c.indexOf(name) === 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+
+      function checkCookie() {
+        let userSection = getCookie("section");
+        if (userSection !== "") {
+          let sectionElement = document.querySelector(userSection);
+          if (sectionElement) {
+            sectionElement.scrollIntoView({ behavior: "smooth" });
+          }
+        } else {
+          setCookie("section", "#Home", 30);
+        }
+      }
+
+      function isElementVisible(element) {
+        const elementTop = element.offsetTop;
+        const elementBottom = elementTop + element.offsetHeight;
+        const viewportTop = window.pageYOffset;
+        const viewportBottom = viewportTop + window.innerHeight;
+        return elementBottom > viewportTop && elementTop < viewportBottom;
+      }
+
+      window.addEventListener("scroll", () => {
+        const sections = ["Home", "CSE3CWA", "CSE5006", "CSE3ILA", "CSE5IBL"];
+        for (const sectionId of sections) {
+          const sectionElement = document.getElementById(sectionId);
+          if (isElementVisible(sectionElement)) {
+            setCookie("section", 30);
+            break;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
